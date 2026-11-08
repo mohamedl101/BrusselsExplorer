@@ -1,8 +1,10 @@
+// API-endpoint en sleutel voor opgeslagen favorieten
 const API_URL =
     "https://bruxellesdata.opendatasoft.com/api/explore/v2.1/catalog/datasets/" +
     "fontaines-d-eau-potable-gerees-par-la-ville-de-bruxelles/records/?lang=nl&limit=100";
 const FAVORITES_KEY = "brussels-explorer-favorites";
 
+// HTML-elementen die in de code worden gebruikt
 const elements = {
     body: document.querySelector("#results-body"),
     search: document.querySelector("#search-input"),
@@ -19,6 +21,7 @@ const elements = {
     backdrop: document.querySelector("#panel-backdrop")
 };
 
+// Applicatiestatus met fonteinen, favorieten en gebruikerslocatie
 const state = {
     fountains: [],
     favorites: readFavorites(),
@@ -30,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadFountains();
 });
 
+// Eventlisteners voor zoekopdrachten, filters, sortering, locatiebepaling en favorieten
 function bindEvents() {
     elements.search.addEventListener("input", renderResults);
     elements.accessFilter.addEventListener("change", renderResults);
@@ -42,6 +46,8 @@ function bindEvents() {
     elements.backdrop.addEventListener("click", () => setFavoritesPanel(false));
 }
 
+
+//  Fonteinen ophalen van de API
 async function loadFountains() {
     showStatus("De fonteinen worden geladen…");
 
@@ -60,6 +66,7 @@ async function loadFountains() {
     }
 }
 
+// Unieke toegangstypen uit de API toevoegen aan filter
 function populateAccessFilter() {
     const accessTypes = [...new Set(
         state.fountains.map((fountain) => fountain.access_type_nl).filter(Boolean)
@@ -73,6 +80,7 @@ function populateAccessFilter() {
     );
 }
 
+// Resultaten filteren en sorteren 
 function getFilteredFountains() {
     const query = elements.search.value.trim().toLocaleLowerCase("nl-BE");
     const access = elements.accessFilter.value;
@@ -103,6 +111,8 @@ function getFilteredFountains() {
         });
 }
 
+
+// Gefilterde fonteinen weergeven in de tabel
 function renderResults() {
     const fountains = getFilteredFountains();
     elements.count.textContent =
@@ -113,6 +123,7 @@ function renderResults() {
         : `<tr><td class="empty" colspan="5">Geen fonteinen gevonden. Pas je zoekterm of filter aan.</td></tr>`;
 }
 
+// Fontein omzetten naar een HTML tabelrij
 function createResultRow(fountain) {
     const id = fountain.id_opendata;
     const isFavorite = state.favorites.includes(id);
@@ -129,14 +140,14 @@ function createResultRow(fountain) {
             </td>
             <td><span class="access-status"><i></i>${escapeHtml(fountain.access_type_nl || "Onbekend")}</span></td>
             <td>${formatDistance(getDistance(fountain))}</td>
-            <td><a class="action-link" href="${escapeHtml(mapLink)}" target="_blank" rel="noopener">Route ↗</a></td>
+            <td><a class="action-link" href="${escapeHtml(mapLink)}" target="_blank" rel="noopener">Route </a></td>
             <td><button class="favorite-button ${isFavorite ? "is-favorite" : ""}" type="button"
                 data-action="favorite" aria-label="${isFavorite ? "Verwijder favoriet" : "Voeg toe aan favorieten"}"
                 aria-pressed="${isFavorite}">${isFavorite ? "♥" : "♡"}</button></td>
         </tr>
     `;
 }
-
+ 
 function handleResultClick(event) {
     const button = event.target.closest("[data-action='favorite']");
     if (!button) return;
@@ -176,6 +187,7 @@ function handleFavoritePanelClick(event) {
     if (button) toggleFavorite(button.closest("[data-id]")?.dataset.id);
 }
 
+// Huidige locatie ophalen en fonteinen op afstand sorteren
 function findNearbyFountains() {
     if (!navigator.geolocation) {
         showStatus("Je browser ondersteunt geen locatiebepaling.", true);
@@ -214,6 +226,7 @@ function getDistance(fountain) {
     );
 }
 
+// De afstand tussen twee geografische locaties berekenen
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const earthRadius = 6371;
     const latitudeDifference = degreesToRadians(lat2 - lat1);
@@ -259,6 +272,7 @@ function hideStatus() {
     elements.status.hidden = true;
 }
 
+// HTML-tekst in een veilige vorm plaatsen voor het voorkomen van XSS-aanvallen
 function escapeHtml(value) {
     return String(value ?? "")
         .replaceAll("&", "&amp;")

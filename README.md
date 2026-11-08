@@ -89,6 +89,7 @@ https://www.w3schools.com/
 https://opendata.brussels.be/pages/home/
 
 CSS Styling en fonts werd uitgewerkt met behulp van van AI tools (Copilot en Claude)
+Berekenen van de geografische coordinaties tussen twee afstanden  (Copilot)
 
 Prompts: Kan je mij helpen met het maken van de styling van mijn website in een eenvoudige zwart-wit en grijze stijl. Wijzig niet de huidige functionaliteit en HTML layout van mijn site
 
@@ -103,3 +104,6 @@ knoppen: donkergrijs
 randen: lichtgrijs
 
 lettertype: Zelf te kiezen (bv Arial)
+
+Prompts: Ik wil in mijn JavaScript-project de afstand berekenen tussen de locatie van de gebruiker en elke drinkwaterfontein uit de API. Gebruik de latitude- en longitudewaarden uit 'geo_point_2d' en de huidige locatie van de gebruiker. Behoud mijn bestaande functionaliteit (wijzig geen onnodige zaken) en geef duidelijk aan waar ik de code moet plaatsen en hoe dat die werkt.
+
