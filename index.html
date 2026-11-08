@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vind openbare drinkwaterfonteinen in Brussel.">
+    <title>BrusselsExplorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a class="brand" href="index.html">Brussels<span>Explorer</span></a>
+            <button id="favorites-menu-button" class="menu-button" type="button" aria-expanded="false">
+                Favorieten
+            </button>
+        </div>
+    </header>
+
+    <aside id="favorites-panel" class="favorites-panel" aria-label="Favorieten" aria-hidden="true">
+        <div class="panel-header">
+            <h2>Favorieten</h2>
+            <button id="close-favorites" class="close-button" type="button" aria-label="Sluit favorieten">×</button>
+        </div>
+        <div id="favorites-container">
+            <p class="muted">Je hebt nog geen favorieten opgeslagen.</p>
+        </div>
+    </aside>
+    <div id="panel-backdrop" class="panel-backdrop" hidden></div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Vind drinkwater<br><span>in je buurt.</span></h1>
+            </div>
+        </section>
+
+        <section class="container explorer">
+            <div class="section-title">
+                <div>
+                    <h2>Drinkwaterfonteinen</h2>
+                </div>
+                <p id="result-count" class="muted" aria-live="polite">Laden…</p>
+            </div>
+
+            <div class="controls" aria-label="Zoek en filter">
+                <label class="search-box">
+                    <span aria-hidden="true">⌕</span>
+                    <span class="sr-only">Zoek een fontein</span>
+                    <input id="search-input" type="search" placeholder="Zoek op naam of adres…" autocomplete="off">
+                </label>
+                <select id="access-filter" aria-label="Filter op toegang">
+                    <option value="all">Alle toegangen</option>
+                </select>
+                <select id="sort-select" aria-label="Sorteer fonteinen">
+                    <option value="name-asc">Naam A-Z</option>
+                    <option value="name-desc">Naam Z-A</option>
+                    <option value="distance-asc">Afstand dichtbij</option>
+                    <option value="distance-desc">Afstand ver</option>
+                </select>
+                <button id="locate-button" class="button button-primary" type="button">Fonteinen in mijn buurt</button>
+            </div>
+
+            <div id="status-message" class="status-message" role="status" hidden></div>
+
+            <div class="results-heading">
+                <h3>Resultaten</h3>
+                <p id="location-status" class="muted">Afstand wordt berekend zodra je je locatie deelt.</p>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <caption class="sr-only">Drinkwaterfonteinen in Brussel</caption>
+                    <thead>
+                        <tr>
+                            <th>Naam en locatie</th>
+                            <th>Toegang</th>
+                            <th>Afstand</th>
+                            <th>Acties</th>
+                            <th>Favoriet</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p><strong>BrusselsExplorer</strong> · Data van <a href="https://bruxellesdata.opendatasoft.com/explore/assets/fontaines-d-eau-potable-gerees-par-la-ville-de-bruxelles/" target="_blank" rel="noopener">Brusselse open data</a></p>
+        </div>
+    </footer>
+</body>
+</html>
